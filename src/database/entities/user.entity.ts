@@ -18,16 +18,6 @@ export class User extends BaseEntity {
   @Column({ type: "int", nullable: false, default: 1 })
   RoleId: number;
 
-  @ManyToOne(() => Role, { eager: true })
-  @JoinColumn({ name: "RoleId" })
-  role: Role;
-
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
-
-  @OneToMany(() => Comment, (comment) => comment.user)
-  comments: Comment[];
-
   @Column({ default: false })
   isVerified: boolean;
 
@@ -36,4 +26,14 @@ export class User extends BaseEntity {
 
   @Column({ type: "varchar", length: 550, nullable: true })
   profilePictureUrl: string;
+
+  @ManyToOne(() => Role, { eager: true })
+  @JoinColumn({ name: "RoleId" })
+  role: Role;
+
+  @OneToMany("Post", "user")
+  posts: Post[];
+
+  @OneToMany("Comment", "user")
+  comments: Comment[];
 }

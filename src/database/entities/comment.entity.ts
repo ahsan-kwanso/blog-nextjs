@@ -8,19 +8,8 @@ export class Comment extends BaseEntity {
   @Column({ type: "int", nullable: false })
   UserId: number;
 
-  @ManyToOne(() => User, (user) => user.comments, { nullable: false })
-  @JoinColumn({ name: "UserId" })
-  user: User;
-
   @Column({ type: "int", nullable: false })
   PostId: number;
-
-  @ManyToOne(() => Post, (post) => post.comments, {
-    onDelete: "CASCADE",
-    nullable: false,
-  })
-  @JoinColumn({ name: "PostId" })
-  post: Post;
 
   @Column({ type: "int", nullable: true })
   ParentCommentId: number;
@@ -40,4 +29,15 @@ export class Comment extends BaseEntity {
     (childComment: Comment) => childComment.parentComment
   )
   childComments: Comment[];
+
+  @ManyToOne("User", "comments", { nullable: false })
+  @JoinColumn({ name: "UserId" })
+  user: User;
+
+  @ManyToOne("Post", "comments", {
+    onDelete: "CASCADE",
+    nullable: false,
+  })
+  @JoinColumn({ name: "PostId" })
+  post: Post;
 }

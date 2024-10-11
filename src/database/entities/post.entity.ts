@@ -8,7 +8,7 @@ export class Post extends BaseEntity {
   @Column({ type: "int", nullable: false })
   UserId: number;
 
-  @ManyToOne(() => User, (user) => user.posts, { nullable: false })
+  @ManyToOne('User', 'posts', { nullable: false })
   @JoinColumn({ name: "UserId" })
   user: User;
 
@@ -18,6 +18,6 @@ export class Post extends BaseEntity {
   @Column({ type: "varchar", length: 500, nullable: false })
   content: string;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
+  @OneToMany('Comment', 'post')
   comments: Comment[];
 }

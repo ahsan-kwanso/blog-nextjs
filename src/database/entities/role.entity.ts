@@ -1,3 +1,4 @@
+// entities/role.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { User } from "./user.entity";
 
@@ -7,8 +8,8 @@ export class Role {
   id: number;
 
   @Column({ unique: true })
-  name: string; // Should only contain 'user' or 'admin'
+  name: string;
 
-  @OneToMany(() => User, (user) => user.role)
+  @OneToMany('User', 'RoleId')
   users: User[];
 }

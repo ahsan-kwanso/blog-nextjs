@@ -1,0 +1,84 @@
+// entities/user.entity.ts
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
+import { BaseEntity } from "./base.entity";
+
+@Entity({ name: "Users" })
+export class User extends BaseEntity {
+  @Column({ type: "varchar", length: 50, nullable: false })
+  name: string;
+
+  @Column({ type: "varchar", length: 50, nullable: false, unique: true })
+  email: string;
+
+  @Column({ type: "varchar", length: 100, nullable: false, select: false })
+  password: string;
+
+  @Column({ type: "int", nullable: false, default: 1 })
+  RoleId: number;
+
+  @Column({ default: false })
+  isVerified: boolean;
+
+  @Column({ nullable: true })
+  verificationToken: string;
+
+  @Column({ type: "varchar", length: 550, nullable: true })
+  profilePictureUrl: string;
+}
+
+// entities/post.entity.ts
+import { Entity, Column, ManyToOne } from "typeorm";
+import { BaseEntity } from "./base.entity";
+
+@Entity({ name: "Posts" })
+export class Post extends BaseEntity {
+  @Column({ type: "int", nullable: false })
+  UserId: number;
+
+  @Column({ type: "varchar", length: 50, nullable: false })
+  title: string;
+
+  @Column({ type: "varchar", length: 500, nullable: false })
+  content: string;
+}
+
+// entities/comment.entity.ts
+import { Entity, Column, ManyToOne } from "typeorm";
+import { BaseEntity } from "./base.entity";
+
+@Entity({ name: "Comments" })
+export class Comment extends BaseEntity {
+  @Column({ type: "int", nullable: false })
+  UserId: number;
+
+  @Column({ type: "int", nullable: false })
+  PostId: number;
+
+  @Column({ type: "varchar", length: 100, nullable: false })
+  content: string;
+}
+
+// entities/role.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { BaseEntity } from "./base.entity";
+import { User } from "./user.entity";
+
+@Entity()
+export class Role extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ unique: true })
+  name: string;
+
+  @OneToMany(() => User, (user) => user.RoleId)
+  users: User[];
+}
+
+
+
+
+https://github.com/typeorm/typeorm/issues/4190
+
+
+visit this for circular dependcies resolution
