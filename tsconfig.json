@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES6", // Or higher, e.g., ES2017
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "strictPropertyInitialization": false,
     "plugins": [
       {
         "name": "next"
